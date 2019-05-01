@@ -14,6 +14,7 @@
 //
 
 using System;
+using System.Threading;
 using System.IO;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -89,7 +90,14 @@ namespace Amazon.Kinesis.ClientLibrary.Bootstrap
             catch (Exception e)
             {
                 i++;
+                if (i >= MAX_RETRIES)
+                {
+                    Console.Error.WriteLine("Exceed maximum for retries for " + url);
+                    throw e;
+                }
+                
                 Console.Error.WriteLine("Error occurred trying to download file url=" + url + " " + e.Message);
+                Thread.Sleep(1000 * i);
             }
         }
 
