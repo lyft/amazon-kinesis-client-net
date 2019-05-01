@@ -71,9 +71,25 @@ namespace Amazon.Kinesis.ClientLibrary.Bootstrap
             String destination = Path.Combine(folder, FileName);
             if (!File.Exists(destination))
             {
-                var client = new System.Net.WebClient();
                 Console.Error.WriteLine(Url + " --> " + destination);
+                downloadWithRetries(Url, destination);
+            }
+        }
+
+        public void downloadWithRetries(String url, String destination)
+        {
+            int MAX_RETRIES = 5;
+            for (int i = 0; i < MAX_RETRIES; i++)
+            try
+            {
+                var client = new System.Net.WebClient();
                 client.DownloadFile(new Uri(Url), destination);
+                break;
+            }
+            catch (Exception e)
+            {
+                i++;
+                Console.Error.WriteLine("Error occurred trying to download file url=" + url + " " + e.Message);
             }
         }
 
@@ -114,7 +130,7 @@ namespace Amazon.Kinesis.ClientLibrary.Bootstrap
         [Option('e', "execute", HelpText =
             "Actually launch the KCL. If not specified, prints the command used to launch the KCL.")]
         public bool ShouldExecute { get; set; }
-        
+
         [Option('l', "log-configuration", Required = false, HelpText = "A Logback XML configuration file")]
         public string LogbackConfiguration { get; set; }
     }
@@ -302,9 +318,9 @@ namespace Amazon.Kinesis.ClientLibrary.Bootstrap
                     java,
                     "-cp",
                     javaClassPath,
-                    "software.amazon.kinesis.multilang.MultiLangDaemon",                    
-                    "-p", 
-                    options.PropertiesFile                    
+                    "software.amazon.kinesis.multilang.MultiLangDaemon",
+                    "-p",
+                    options.PropertiesFile
                 };
                 if (!string.IsNullOrEmpty(options.LogbackConfiguration))
                 {
@@ -312,7 +328,7 @@ namespace Amazon.Kinesis.ClientLibrary.Bootstrap
                     cmd.Add(options.LogbackConfiguration);
                 }
                 if (options.ShouldExecute)
-                {                    
+                {
                     // Start the KCL.
                     Process proc = new Process
                     {
