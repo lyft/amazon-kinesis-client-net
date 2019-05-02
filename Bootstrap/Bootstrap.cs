@@ -95,7 +95,7 @@ namespace Amazon.Kinesis.ClientLibrary.Bootstrap
                     Console.Error.WriteLine("Exceed maximum for retries for " + url);
                     throw e;
                 }
-                
+
                 Console.Error.WriteLine("Error occurred trying to download file url=" + url + " " + e.Message);
                 Thread.Sleep(1000 * i);
             }
@@ -221,8 +221,12 @@ namespace Amazon.Kinesis.ClientLibrary.Bootstrap
             new MavenPackage("commons-io", "commons-io", "2.6"),
             new MavenPackage("org.apache.commons", "commons-collections4", "4.2"),
             new MavenPackage("commons-beanutils", "commons-beanutils", "1.9.3"),
-            new MavenPackage("commons-collections", "commons-collections", "3.2.2")
-        };
+            new MavenPackage("commons-collections", "commons-collections", "3.2.2"),
+            new MavenPackage("javax.xml.bind", "jaxb-api", "2.2.11"),
+            new MavenPackage("com.sun.xml.bind", "jaxb-core", "2.2.11"),
+            new MavenPackage("com.sun.xml.bind", "jaxb-impl", "2.2.11"),
+            new MavenPackage("javax.activation", "activation", "1.1.1")
+          };
 
         /// <summary>
         /// Downloads all the required jars from Maven and returns a classpath string that includes all those jars.
