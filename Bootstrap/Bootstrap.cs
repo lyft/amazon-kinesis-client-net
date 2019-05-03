@@ -179,6 +179,7 @@ namespace Amazon.Kinesis.ClientLibrary.Bootstrap
             new MavenPackage("com.google.protobuf", "protobuf-java", "2.6.1"),
             new MavenPackage("commons-lang", "commons-lang", "2.6"),
             new MavenPackage("commons-logging", "commons-logging", "1.1.3"),
+            new MavenPackage("log4j", "log4j", "1.2.17"),
             new MavenPackage("javax.xml.bind", "jaxb-api", "2.2.11"),
             new MavenPackage("com.sun.xml.bind", "jaxb-core", "2.2.11"),
             new MavenPackage("com.sun.xml.bind", "jaxb-impl", "2.2.11"),
